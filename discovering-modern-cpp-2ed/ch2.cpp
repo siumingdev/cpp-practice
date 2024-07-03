@@ -13,13 +13,14 @@ public:
 
     Polynomial& operator=(Polynomial&& that)
     {
-        if (this == &that) return *this;
-        coeff = std::move(that.coeff);
+        if (this != &that) {
+            coeff = std::move(that.coeff);
+        }
         std::cout << "Move" << std::endl;
         return *this;
     }
 
-    Polynomial& operator=(std::initializer_list<double> coeff_)
+    Polynomial& operator=(std::initializer_list<double> const& coeff_)
     {
         coeff.clear();
         for (double c : coeff_) {
