@@ -13,9 +13,8 @@ public:
 
     Polynomial& operator=(Polynomial&& that)
     {
-        coeff.clear();
+        if (this == &that) return *this;
         coeff = std::move(that.coeff);
-        that.coeff.clear();
         std::cout << "Move" << std::endl;
         return *this;
     }
