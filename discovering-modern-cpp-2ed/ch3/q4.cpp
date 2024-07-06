@@ -70,28 +70,46 @@ std::ostream& operator<<(std::ostream& os, Rational<T> const& r)
 }
 
 template<std::signed_integral T>
-auto operator+(Rational<T> r1, Rational<T> r2)
+Rational<T> operator+(Rational<T> r1, Rational<T> r2)
 {
     return Rational(r1.get_numerator() * r2.get_denominator() + r2.get_numerator() * r1.get_denominator(), r1.get_denominator() * r2.get_denominator());
 }
 
 template<std::signed_integral T>
-auto operator-(Rational<T> r1, Rational<T> r2)
+Rational<T> operator-(Rational<T> r1, Rational<T> r2)
 {
     return Rational(r1.get_numerator() * r2.get_denominator() - r2.get_numerator() * r1.get_denominator(), r1.get_denominator() * r2.get_denominator());
 }
 
 template<std::signed_integral T>
-auto operator*(Rational<T> r1, Rational<T> r2)
+Rational<T> operator*(Rational<T> r1, Rational<T> r2)
 {
     return Rational(r1.get_numerator() * r2.get_numerator(), r1.get_denominator() * r2.get_denominator());
 }
 
 template<std::signed_integral T>
-auto operator/(Rational<T> r1, Rational<T> r2)
+Rational<T> operator/(Rational<T> r1, Rational<T> r2)
 {
     return Rational(r1.get_numerator() * r2.get_denominator(), r1.get_denominator() * r2.get_numerator());
 }
+
+template<std::signed_integral T>
+Rational<T> operator+(Rational<T> r1, T r2) { return r1 + Rational{r2}; }
+template<std::signed_integral T>
+Rational<T> operator-(Rational<T> r1, T r2) { return r1 - Rational{r2}; }
+template<std::signed_integral T>
+Rational<T> operator*(Rational<T> r1, T r2) { return r1 * Rational{r2}; }
+template<std::signed_integral T>
+Rational<T> operator/(Rational<T> r1, T r2) { return r1 / Rational{r2}; }
+
+template<std::signed_integral T>
+Rational<T> operator+(T r1, Rational<T> r2) { return Rational{r1} + r2; }
+template<std::signed_integral T>
+Rational<T> operator-(T r1, Rational<T> r2) { return Rational{r1} - r2; }
+template<std::signed_integral T>
+Rational<T> operator*(T r1, Rational<T> r2) { return Rational{r1} * r2; }
+template<std::signed_integral T>
+Rational<T> operator/(T r1, Rational<T> r2) { return Rational{r1} / r2; }
 
 int main() {
     Rational r1{6, -5}, r2{10, 7}, r3{r1/r2}, r4{r1+r2};
@@ -99,6 +117,8 @@ int main() {
     std::cout << r2 << std::endl;
     std::cout << r3 << std::endl;
     std::cout << r4 << std::endl;
+    std::cout << r4 + 2 << std::endl;
+    std::cout << 2 + r4 << std::endl;
 
     r3 += 3;
     std::cout << r3 << std::endl;
