@@ -13,7 +13,7 @@ public:
         if (l.size() > max_size) throw overflow{}; 
         data.insert(data.end(), l.begin(), l.end());
     }
-    T top() const {
+    T const& top() const {
         if (data.empty()) throw underflow{};
         return data.back();
     }
