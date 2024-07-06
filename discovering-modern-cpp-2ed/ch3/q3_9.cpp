@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 
-template<typename T>
+template<typename T, size_t N = 4096>
 class Stack 
 {
 public:
@@ -32,7 +32,7 @@ public:
 
 private:
     std::vector<T> data;
-    static size_t const max_size = 10000;
+    static size_t const max_size = N;
 };
 
 int main() {
@@ -74,6 +74,10 @@ int main() {
     std::cout << "move" << std::endl;
     std::cout << ds.size() << std::endl;
     std::cout << ds2.size() << std::endl;
-    
+
+    std::cout << "N" << std::endl;
+    Stack<double, 3> ds3{1.1, 2.2, 3.3};
+    std::cout << ds3.size() << std::endl;
+    std::cout << ds3.full() << std::endl;
     return 0;
 }
