@@ -21,7 +21,10 @@ public:
         if (data.empty()) throw underflow{};
         data.pop_back();
     }
-    void push(T&& elem) { data.push_back(elem); }
+    void push(T&& elem) { 
+        if (data.size() == max_size) throw overflow{};
+        data.push_back(elem); 
+    }
     void clear() { data.clear(); }
     size_t size() const { return data.size(); }
     bool full() { return (data.size() == max_size); }
