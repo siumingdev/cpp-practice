@@ -12,7 +12,7 @@ void to_tuple_string_aux(std::ostringstream& oss, T const& x, P const& ...p) {
 }
 
 template <typename ...P>
-std::string to_tuple_string_recursive(P const& ...p) {
+std::string to_tuple_string(P const& ...p) {
     std::ostringstream oss;
     oss << '(';
     to_tuple_string_aux(oss, p...);
@@ -21,7 +21,7 @@ std::string to_tuple_string_recursive(P const& ...p) {
 }
 
 template <typename ...P>
-std::string to_tuple_string_recursive_lambda(P const& ...p) {
+std::string to_tuple_string_lambda(P const& ...p) {
     std::ostringstream oss;
     oss << '(';
 
@@ -41,7 +41,7 @@ std::string to_tuple_string_recursive_lambda(P const& ...p) {
 }
 
 int main() {
-    std::cout << to_tuple_string_recursive(1.1, "abc", "def") << std::endl;
-    std::cout << to_tuple_string_recursive_lambda(1.1, "abc", "def") << std::endl;
+    std::cout << to_tuple_string(1.1, "abc", "def") << std::endl;
+    std::cout << to_tuple_string_lambda(1.1, "abc", "def") << std::endl;
     return 0;
 }
