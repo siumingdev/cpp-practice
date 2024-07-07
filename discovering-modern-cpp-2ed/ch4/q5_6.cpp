@@ -2,6 +2,7 @@
 // with sum_in_threads and sum_async member functions added
 
 #include <cassert>
+#include <future>
 #include <iostream>
 #include <vector>
 #include <thread>
@@ -51,12 +52,27 @@ public:
         std::vector<std::thread> threads;
         for (size_t i = 0; i < num_threads; ++i)
             threads.emplace_back([&, i, this]() {
-               for (size_t j = 0; j < my_size; ++j) {
-                   if ((j % num_threads) == i) sum[j] = (*this)[j] + that[j];
+               for (size_t j = i; j < my_size; j += num_threads) {
+                   sum[j] = (*this)[j] + that[j];
                }
             });
 
         for (size_t i = 0; i < num_threads; ++i) threads[i].join();
+        return sum;
+    }
+
+    vector sum_async(const vector& that) const {
+        assert(that.my_size == my_size);
+        vector sum(my_size);
+
+        std::vector<std::future<double>> futures;
+        for (size_t i = 0; i < my_size; ++i)
+            futures.push_back(std::async([&, i, this]() { return (*this)[i] + that[i]; }));
+        
+        for (size_t i = 0; i < my_size; ++i) {
+            futures[i].wait();
+            sum[i] = futures[i].get();
+        }
         return sum;
     }
 
@@ -103,5 +119,8 @@ int main() {
     
     vector sum2{w.sum_in_threads(v1, 3)};
     std::cout << sum2 << std::endl;
+    
+    vector sum3{w.sum_async(v1)};
+    std::cout << sum3 << std::endl;
     return 0;
 }
