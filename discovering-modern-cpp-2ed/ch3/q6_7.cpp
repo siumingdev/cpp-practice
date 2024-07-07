@@ -1,4 +1,5 @@
 #include <cstddef>
+#include <exception>
 #include <iostream>
 #include <iterator>
 #include <ranges>
@@ -8,7 +9,7 @@ public:
     using difference_type = std::ptrdiff_t;
     using value_type = int;
 
-    struct invalid_value{};
+    struct invalid_value : std::exception {};
 
     odd_iterator(int value_ = 1) {
         if (!(value_ % 2)) throw invalid_value{};
