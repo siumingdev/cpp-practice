@@ -1,3 +1,4 @@
+#include <exception>
 #include <initializer_list>
 #include <iostream>
 #include <vector>
@@ -6,8 +7,8 @@ template<typename T, size_t N = 4096>
 class Stack 
 {
 public:
-    struct overflow {};
-    struct underflow {};
+    struct overflow : std::exception {};
+    struct underflow : std::exception {};
 
     Stack(std::initializer_list<T> l) { 
         if (l.size() > max_size) throw overflow{}; 
